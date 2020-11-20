@@ -16,7 +16,8 @@ function h = rrc(varargin)
 os_factor = varargin{1};
 if nargin == 1
     rolloff_factor = 0.22;
-    filterlength = 9;
+    %filterlength = 9;
+    filterlength = 20;
 elseif nargin == 2
     filterlength = varargin{2};
     rolloff_factor = 0.22;

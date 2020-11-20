@@ -59,6 +59,7 @@ for k=1:conf.nframes
     
     % ???? normalize values 
     peakvalue       = max(abs(txsignal));
+    %normtxsignal    = txsignal / (peakvalue + 0.3);
     normtxsignal    = 0.5*txsignal / peakvalue;
     % normalize the peak to 0.5
     
