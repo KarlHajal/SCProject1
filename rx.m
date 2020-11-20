@@ -73,17 +73,17 @@ function [rxbits conf] = rx(rxsignal, txsyms, conf,k)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Compare the magnitude and phase of the estimated and original symbols
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    txsyms_mf = preprocess(txsyms, conf);
-    txsyms_sample = txsyms_mf(os_factor*npreamble+1:os_factor:length(txsyms_mf));
-    figure(3); 
-    subplot(2, 1, 1);
-    plot(abs(txsyms_sample(1:100)), 'Linewidth', 1.5);hold on; 
-    plot(abs(data_phase(1:100)), 'Linewidth', 1.5); hold off;
-    ylabel('magnitude'); legend('txsyms', 'rxsyms after correction');
-    subplot(2, 1, 2);
-    plot(angle(txsyms_sample(1:100)), 'Linewidth', 1.5); hold on; 
-    plot(angle(data_phase(1:100)), 'Linewidth', 1.5); hold off;
-    ylabel('phase'); legend('txsyms', 'rxsyms after correction');
+    %txsyms_mf = preprocess(txsyms, conf);
+    %txsyms_sample = txsyms_mf(os_factor*npreamble+1:os_factor:length(txsyms_mf));
+    %figure(3); 
+    %subplot(2, 1, 1);
+    %plot(abs(txsyms_sample(1:100)), 'Linewidth', 1.5);hold on; 
+    %plot(abs(data_phase(1:100)), 'Linewidth', 1.5); hold off;
+    %ylabel('magnitude'); legend('txsyms', 'rxsyms after correction');
+    %subplot(2, 1, 2);
+    %plot(angle(txsyms_sample(1:100)), 'Linewidth', 1.5); hold on; 
+    %plot(angle(data_phase(1:100)), 'Linewidth', 1.5); hold off;
+    %ylabel('phase'); legend('txsyms', 'rxsyms after correction');
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     
@@ -130,18 +130,9 @@ function [beginning_of_data, phase_of_peak, magnitude_of_peak] = frame_sync(in_s
 end
 
 function [epsilon, cum_err] = epsilon_estimation(segment, cum_err)
-    os_factor = length(segment);
-    %pwr = abs(segment).^2;
-    %tmp_seq = (-1i).^(0 : os_factor-1);
-    %diff_err = tmp_seq*pwr;
-    
+    os_factor = length(segment);  
     tmp_seq = exp(-1i*(2*pi)*(0:os_factor-1)*(1/os_factor));
-    cum_err = cum_err + tmp_seq*(abs(segment).^2);
-    
-    %result = fft(abs(segment).^2);
-    %diff_err = result(2);
-    %cum_err = cum_err + diff_err;
-    
+    cum_err = cum_err + tmp_seq*(abs(segment).^2); 
     epsilon = -(1/(2*pi))*angle(cum_err);
 end
 

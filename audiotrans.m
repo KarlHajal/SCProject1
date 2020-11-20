@@ -43,7 +43,19 @@ res.rxnbits     = zeros(conf.nframes,1);
 
 % Results
 
+%symbol_rates = [100, 250, 500, 600, 750, 800, 1000, 1200, 1500, 1600, 2000];
+%ber_vs_symbol_rate = zeros(length(symbol_rates), 1);
 
+%for symbol_rate_index = 1 : length(symbol_rates)
+
+%    conf.f_sym = symbol_rates(symbol_rate_index);
+    
+%    conf.os_factor  = conf.f_s/conf.f_sym; % oversampling factor
+%    if mod(conf.os_factor,1) ~= 0
+%       disp('WARNING: Sampling rate must be a multiple of the symbol rate'); 
+%    end
+%    conf.nsyms      = ceil(conf.nbits/conf.modulation_order); % number of symbols
+    
 for k=1:conf.nframes
     
     % Generate random data
@@ -136,8 +148,15 @@ for k=1:conf.nframes
     
     res.rxnbits(k)      = length(rxbits);  
     res.biterrors(k)    = sum(rxbits ~= txbits);
-    
 end
+
+%ber_vs_symbol_rate(symbol_rate_index) = sum(res.biterrors)/sum(res.rxnbits)
+%end
 
 per = sum(res.biterrors > 0)/conf.nframes
 ber = sum(res.biterrors)/sum(res.rxnbits)
+
+%figure(10)
+%plot(symbol_rates, ber_vs_symbol_rate);
+%xlabel('Symbol Rate') 
+%ylabel('BER')
