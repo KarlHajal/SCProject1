@@ -35,6 +35,7 @@ txsyms_rrc = conv(txsyms_us, rrc(os_factor), 'same'); % pulse shaping
 carrier_seq = exp(1i*2*pi*(f_c/f_s)*(1:length(txsyms_rrc))).'; % carrier sequence
 txsyms_uc = txsyms_rrc.*carrier_seq; % up conversion
 txsignal = real(txsyms_uc);
+figure(2); plot(txsignal(npreamble*os_factor+1:(npreamble+5.5)*os_factor), 'Linewidth', 1); ylabel('txsignal')
 
 end
 
